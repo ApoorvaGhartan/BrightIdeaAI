@@ -31,14 +31,24 @@ export default function Usage_track() {
    }, [user]);
 
    const GetData = async () => {
-      if (!user?.primaryEmailAddress?.emailAddress) return; // Guard clause for safety
+    if (!user?.primaryEmailAddress?.emailAddress) return; // Guard clause for safety
 
-      // Fetch data from the database
-      const result: HISTORY[] = await db.select().from(AIOutput)
-         .where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
-      
-      GetTotalUsage(result);
-   }
+    // Fetch data from the database
+    const resultFromDb = await db.select().from(AIOutput)
+        .where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
+
+    // Map the result to the HISTORY type
+    const result: HISTORY[] = resultFromDb.map(item => ({
+        id: item.id,
+        formData: item.formData,
+        aiResponse: item.aiResponse,
+        templateSlug: item.templateSlug, // Ensure this matches your DB structure
+        createdBy: item.createdBy,
+        createdAt: item.createdAt,
+    }));
+
+    GetTotalUsage(result);
+};
 
    const GetTotalUsage = (result: HISTORY[]) => {
       const total: number = result.reduce((acc, element) => {
