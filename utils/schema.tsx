@@ -1,13 +1,12 @@
-import { pgTable, serial, text, varchar, timestamp } from "drizzle-orm/pg-core";
-
-export const AIOutput = pgTable('aiOutput', {
-    id: serial('id').primaryKey(),
-    formData: varchar('formData'),
-    aiResponse: text('aiResponse'),
-    templateSlug: varchar('templateSlug'), // Corrected spelling
-    createdBy: varchar('createdBy'),
-    createdAt: timestamp('createdAt').defaultNow(), // Optional: If you want to store timestamps
-});
+import { pgTable,serial,text,varchar,boolean } from "drizzle-orm/pg-core";
+export const AIOutput=pgTable('aiOutput',{
+id:serial('id').primaryKey(),
+formData:varchar('formData'),
+aiResponse:text('aiResponse'),
+tempelateSlug:varchar('tempelateSlug'),
+createdBy:varchar('createdBy'),
+createdAt:varchar('createdAt')
+})
 
 export const UserSubscription=pgTable('userSubscription',{
     id:serial('id').primaryKey(),
