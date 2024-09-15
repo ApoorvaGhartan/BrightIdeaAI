@@ -9,13 +9,14 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 export interface HISTORY {
-    id: Number,
-    formData: string,
-    aiResponse: string,
-    tempelateSlug: string,
-    createdBy: string,
-    createdAt: string,
+    id: number; // Changed Number to number
+    formData: string | null; // Ensure types match the data from your database
+    aiResponse: string | null;
+    templateSlug: string | null; // Corrected spelling
+    createdBy: string | null;
+    createdAt: string | null;
 }
+
 
  async function History(){
     const user = await currentUser();
